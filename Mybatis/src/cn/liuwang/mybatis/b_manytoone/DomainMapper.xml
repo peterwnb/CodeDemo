@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace： 命名空间===放置的包一致 -->
+<mapper namespace="cn.liuwang.mybatis.b_manytoone.DomainMapper">
+
+	<select id="findAll" resultMap="userResultMap">
+		select u.id,u.name,u.password
+		,d.id did,d.name dname
+		from t_user u 
+		left join t_dept d
+		on d.id=u.dept_id
+	</select>
+
+	<!-- User { 多方 -->
+	<!-- private Long id; -->
+	<!-- private String name; -->
+	<!-- private String password; -->
+	<!-- private Dept dept; 一方 -->
+
+	<!-- 每个类都必须配置id属性 -->
+	<!-- property="java的属性" column="表字段的别名" -->
+
+	<resultMap type="cn.liuwang.mybatis.b_manytoone.User" id="userResultMap">
+		<!-- 先处理多方User:u.id,u.name,u.password -->
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="password" column="password" />
+		<!-- 先处理一方Dept:d.id did,d.name dname,一方Dept属于user对象里面一个属性 -->
+		<!-- javaType:dept属性的类名 -->
+		<association property="dept"
+			javaType="cn.liuwang.mybatis.b_manytoone.Dept">
+			<id property="id" column="did" />
+			<result property="name" column="dname" />
+		</association>
+
+
+	</resultMap>
+
+</mapper>

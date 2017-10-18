@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace： 命名空间===放置的包一致 -->
+<mapper namespace="cn.liuwang.mybatis.a_crud.DeptMapper">
+
+	<!-- useGeneratedKeys="true" keyProperty="id"把新插入的id返回，放置到Dept.id属性里面 -->
+	<insert id="save" parameterType="cn.liuwang.mybatis.a_crud.Dept"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_dept(name) values
+		(#{name}) 
+	</insert>
+
+	<update id="update" parameterType="cn.liuwang.mybatis.a_crud.Dept">
+		update t_dept set name=#{name}
+		where id=#{id}
+	</update>
+
+	<delete id="delete" parameterType="long">
+		delete from t_dept where
+		id=#{id}
+	</delete>
+
+	<select id="get" parameterType="long" resultType="cn.liuwang.mybatis.a_crud.Dept">
+		select
+		id,name from t_dept where id=#{id}
+	</select>
+
+	<select id="getAll" resultType="cn.liuwang.mybatis.a_crud.Dept">
+		select
+		id,name from
+		t_dept
+	</select>
+
+</mapper>

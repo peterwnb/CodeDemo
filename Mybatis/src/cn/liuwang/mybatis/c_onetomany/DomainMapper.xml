@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace： 命名空间===放置的包一致 -->
+<mapper namespace="cn.liuwang.mybatis.c_onetomany.DomainMapper">
+
+	<select id="findAll" resultMap="deptResultMap">
+		select d.id,d.name,u.id
+		uid,u.name uname,u.password
+		from t_dept d
+		left join t_user u 
+		on
+		d.id=u.dept_id
+	</select>
+
+	<!-- Dept { 一方 -->
+	<!-- private Long id; -->
+	<!-- private String name; -->
+	<!-- private List<User> users = new ArrayList<User>(); 多方 -->
+
+	<resultMap type="cn.liuwang.mybatis.c_onetomany.Dept" id="deptResultMap">
+		<!-- 先处理一方d.id,d.name,u.id -->
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<!-- 在处理多方===List:uid,u.name uname,u.password -->
+<!-- 		javaType:返回java的类型：arraylist -->
+<!-- 		ofType:返回java的集合类型里面的java类型 -->
+		<collection property="users" javaType="ArRayList" ofType="cn.liuwang.mybatis.c_onetomany.User">
+			<id property="id" column="uid" />
+			<result property="name" column="uname" />
+			<result property="password" column="password" />
+		</collection>
+
+	</resultMap>
+
+
+
+</mapper>

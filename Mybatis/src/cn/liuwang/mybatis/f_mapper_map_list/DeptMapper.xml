@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace： 命名空间===指向Mapper的接口 -->
+<mapper namespace="cn.liuwang.mybatis.f_mapper_map_list.DeptMapper">
+     <select id="getAll" resultType="haShMaP">
+		select
+			id,name 
+		from
+			t_dept
+	</select>
+	
+     <select id="get" resultType="hashMap">
+		select
+			id,name 
+		from
+			t_dept
+		where 
+			id=#{id}
+	</select>
+</mapper>

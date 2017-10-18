@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace： 命名空间===放置的包一致 -->
+<mapper namespace="cn.liuwang.mybatis.d_cache.DomainMapper">
+    <cache/>
+
+	<select id="findAll" resultMap="userResultMap">
+		select id,name,password,dept_id 
+		from t_user
+	</select>
+
+	<!-- User { 多方 -->
+	<!-- private Long id; -->
+	<!-- private String name; -->
+	<!-- private String password; -->
+	<!-- private Dept dept; 一方 -->
+
+	<!-- 每个类都必须配置id属性 -->
+	<!-- property="java的属性" column="表字段的别名" -->
+
+	<resultMap type="cn.liuwang.mybatis.d_cache.User" id="userResultMap">
+		<!-- 一条sql查询员工的信息，包含外键 -->
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="password" column="password" />
+	<!-- column="dept_id"发出第二天sql的查询条件，必须配置 -->
+		<association property="dept" column="dept_id"
+			select="cn.liuwang.mybatis.d_cache.DomainMapper.findDeptByDeptId" />
+	</resultMap>
+
+	<select id="findDeptByDeptId" resultType="cn.liuwang.mybatis.d_cache.Dept"
+		parameterType="long">
+		select id,name from t_dept where id=#{id}
+	</select>
+
+</mapper>
